@@ -18,6 +18,19 @@ const styles = {
     display: "flex",
     width: "100%",
     justifyContent: "space-between",
+    alignItems: "center",
+    "& a": {
+      color: "white",
+      textDecoration: "none",
+      border: "2px solid white",
+      padding: "0.5em 1em",
+      backgroundColor: "rgba(0,0,0,0.6)",
+      transition: "all 0.1s ease-in-out",
+      "&:hover": {
+        backgroundColor: "rgba(0,0,0,0.3)",
+        transform: "scale(1.1)",
+      },
+    },
   },
   palettes: {
     boxSizing: "border-box",
