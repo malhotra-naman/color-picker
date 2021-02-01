@@ -6,68 +6,39 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
+import AddToPhotosIcon from "@material-ui/icons/AddToPhotos";
 import { Button } from "@material-ui/core";
-import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 import { withStyles } from "@material-ui/core/styles";
-
-const drawerWidth = 400;
-
-const styles = (theme) => ({
-  root: {
-    display: "flex",
-  },
-  appBar: {
-    transition: theme.transitions.create(["margin", "width"], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-  },
-  appBarShift: {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: drawerWidth,
-    transition: theme.transitions.create(["margin", "width"], {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-    flexDirection: "row",
-    justifyContent: "space-between",
-    height: "64px",
-  },
-  menuButton: {
-    marginLeft: 12,
-    marginRight: 20,
-  },
-  hide: {
-    display: "none",
-  },
-  navBtns: {},
-});
+import PaletteMetaForm from "./PaletteMetaForm";
+import styles from "./styles/PaletteFormNavStyles";
 
 class PaletteFormNav extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      newPaletteName: "",
+      open: true,
+      formShowing: false,
     };
-    this.handleChange = this.handleChange.bind(this);
+    this.showForm = this.showForm.bind(this);
+    this.hideForm = this.hideForm.bind(this);
   }
 
-  componentDidMount() {
-    ValidatorForm.addValidationRule("isPaletteNameUnique", (value) =>
-      this.props.palettes.every(
-        ({ paletteName }) => paletteName.toLowerCase() !== value.toLowerCase()
-      )
-    );
+  showForm() {
+    this.setState({ formShowing: true });
   }
 
-  handleChange(evt) {
-    this.setState({ [evt.target.name]: evt.target.value });
+  hideForm() {
+    this.setState({ formShowing: false });
   }
 
   render() {
-    const { classes, open, handleSubmit, handleDrawerOpen } = this.props;
-    const { newPaletteName } = this.state;
+    const {
+      classes,
+      open,
+      handleSubmit,
+      handleDrawerOpen,
+      palettes,
+    } = this.props;
     return (
       <div className={classes.root}>
         <CssBaseline />
@@ -85,36 +56,39 @@ class PaletteFormNav extends Component {
               onClick={handleDrawerOpen}
               className={classNames(classes.menuButton, open && classes.hide)}
             >
-              <MenuIcon />
+              <AddToPhotosIcon />
             </IconButton>
             <Typography variant="h6" color="inherit" noWrap>
               Create a Palette
             </Typography>
           </Toolbar>
           <div className={classes.navBtns}>
-            <ValidatorForm onSubmit={() => handleSubmit(newPaletteName)}>
-              <TextValidator
-                label="Palette Name"
-                name="newPaletteName"
-                value={this.state.newPaletteName}
-                onChange={this.handleChange}
-                validators={["required", "isPaletteNameUnique"]}
-                errorMessages={[
-                  "This field is required!",
-                  "Palette Name already used!",
-                ]}
-              />
-              <Button variant="contained" color="primary" type="submit">
-                Save Palette
-              </Button>
-            </ValidatorForm>
             <Link to="/">
-              <Button variant="contained" color="secondary">
+              <Button
+                variant="contained"
+                color="secondary"
+                className={classes.button}
+              >
                 Go Back
               </Button>
             </Link>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={this.showForm}
+              className={classes.button}
+            >
+              Save
+            </Button>
           </div>
         </AppBar>
+        {this.state.formShowing && (
+          <PaletteMetaForm
+            handleSubmit={handleSubmit}
+            palettes={palettes}
+            hideForm={this.hideForm}
+          />
+        )}
       </div>
     );
   }

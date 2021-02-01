@@ -1,7 +1,7 @@
 const styles = {
   root: {
     backgroundColor: "blue",
-    height: "100vh",
+    height: "200vh",
     display: "flex",
     justifyContent: "center",
     alignItems: "flex-start",
