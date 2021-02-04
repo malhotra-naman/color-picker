@@ -1,10 +1,26 @@
+import sizes from "./sizes";
+import bg from "./bg.svg";
+
 const styles = {
+  "@global": {
+    ".fade-exit": {
+      opacity: "1",
+    },
+    ".fade-exit-active": {
+      opacity: "0",
+      transition: "opacity 500ms ease-out",
+    },
+  },
   root: {
-    backgroundColor: "blue",
-    height: "200vh",
+    minHeight: "100vh",
+    height: "100%",
+    overflow: "scroll",
     display: "flex",
     justifyContent: "center",
     alignItems: "flex-start",
+    /* background by SVGBackgrounds.com */
+    backgroundColor: "#000000",
+    background: `no-repeat center/cover url(${bg})`,
   },
   container: {
     width: "50%",
@@ -12,6 +28,12 @@ const styles = {
     flexDirection: "column",
     flexWrap: "wrap",
     alignItems: "flex-start",
+    [sizes.down("xl")]: {
+      width: "80%",
+    },
+    [sizes.down("xs")]: {
+      width: "80%",
+    },
   },
   nav: {
     color: "white",
@@ -37,7 +59,14 @@ const styles = {
     width: "100%",
     display: "grid",
     gridTemplateColumns: "repeat(3, 30%)",
-    gridGap: "5%",
+    gridGap: "2.5rem",
+    [sizes.down("md")]: {
+      gridTemplateColumns: "repeat(2, 50%)",
+    },
+    [sizes.down("xs")]: {
+      gridTemplateColumns: "repeat(1, 100%)",
+      gridGap: "1.5rem",
+    },
   },
 };
 

@@ -1,3 +1,5 @@
+import sizes from "./sizes";
+
 const styles = {
   root: {
     backgroundColor: "white",
@@ -10,6 +12,7 @@ const styles = {
     "&:hover svg": {
       opacity: "1",
     },
+    marginBottom: "1rem",
   },
   colors: {
     backgroundColor: "#dae1e4",
@@ -17,6 +20,12 @@ const styles = {
     width: "100%",
     borderRadius: "5px",
     overflow: "hidden",
+    [sizes.down("xl")]: {
+      height: "200px",
+    },
+    [sizes.down("lg")]: {
+      height: "150px",
+    },
   },
   title: {
     display: "flex",
